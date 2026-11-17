@@ -34,14 +34,21 @@ public class TowerShoot : MonoBehaviour
         }
     }
 
+    
     void Shoot()
     {
         if (towerAim.Target == null)
             return;
 
-        // Calculate the direction directly toward the enemy
+        // Calculate where the enemy will be
+        Vector3 predictedPosition =
+            towerAim.GetPredictedPosition(
+                firePoint.position,
+                projectileSpeed
+            );
+
         Vector3 direction =
-            towerAim.Target.position - firePoint.position;
+            predictedPosition - firePoint.position;
 
         if (direction.sqrMagnitude < 0.001f)
             return;
@@ -57,7 +64,11 @@ public class TowerShoot : MonoBehaviour
 
         if (projectile != null)
         {
-            projectile.Launch(direction, projectileSpeed);
+            projectile.Launch(
+                direction,
+                projectileSpeed
+            );
         }
     }
+
 }

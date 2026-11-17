@@ -5,26 +5,29 @@ public class EnemyHealth : MonoBehaviour
 {
     public int health = 3;
 
+    private bool defeated = false;
+
     public void TakeDamage(int damage)
     {
-        if (GameManager.IsGameOver)
+        if (GameManager.IsGameOver || defeated)
             return;
 
         health -= damage;
 
-        Debug.Log("Enemy health: " + health);
+        Debug.Log(gameObject.name + " health: " + health);
 
         if (health <= 0)
         {
-            Debug.Log("Enemy destroyed!");
+            defeated = true;
 
-            // Tell GameManager the player won
+            Debug.Log(gameObject.name + " destroyed!");
+
             GameManager manager =
                 FindFirstObjectByType<GameManager>();
 
             if (manager != null)
             {
-                manager.WinGame();
+                manager.EnemyDefeated();
             }
 
             Destroy(gameObject);

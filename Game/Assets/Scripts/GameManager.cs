@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static bool IsGameOver { get; private set; }
     public static bool IsVictory { get; private set; }
+    private int enemiesRemaining;
 
     void Awake()
     {
@@ -13,6 +14,18 @@ public class GameManager : MonoBehaviour
         IsVictory = false;
         Time.timeScale = 1f;
     }
+
+    void Start()
+    {
+        // Count all enemies when the game begins
+        enemiesRemaining =
+            FindObjectsByType<EnemyHealth>(
+                FindObjectsSortMode.None
+            ).Length;
+
+        Debug.Log("Enemies remaining: " + enemiesRemaining);
+    }
+
 
     // Called when an enemy reaches the end
     public void EndGame()
@@ -25,6 +38,22 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("GAME OVER!");
         Time.timeScale = 0f;
+    }
+
+    public void EnemyDefeated()
+    {
+        if (IsGameOver)
+            return;
+
+        enemiesRemaining--;
+
+        Debug.Log("Enemies remaining: " + enemiesRemaining);
+
+        // Win only when every enemy has been defeated
+        if (enemiesRemaining <= 0)
+        {
+            WinGame();
+        }
     }
 
     // Called when the enemy is destroyed

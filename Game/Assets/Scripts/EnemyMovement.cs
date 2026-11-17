@@ -8,6 +8,27 @@ public class EnemyMovement : MonoBehaviour
 
     private int currentWaypoint = 0;
 
+    
+    public Vector3 CurrentVelocity
+    {
+        get
+        {
+            if (waypoints == null ||
+                currentWaypoint >= waypoints.Length ||
+                waypoints[currentWaypoint] == null)
+                return Vector3.zero;
+
+            Vector3 direction =
+                waypoints[currentWaypoint].position
+                - transform.position;
+
+            if (direction.sqrMagnitude < 0.0001f)
+                return Vector3.zero;
+
+            return direction.normalized * speed;
+        }
+    }
+
     void Update()
     {
         if (GameManager.IsGameOver)
