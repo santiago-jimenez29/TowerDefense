@@ -181,7 +181,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d2d02815b6187f9468984ea3bb639180, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -274,7 +274,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerAim
   towerHead: {fileID: 4673597995807858333}
-  enemy: {fileID: 0}
   range: 12
 --- !u!114 &6900544592695665610
 MonoBehaviour:
@@ -290,8 +289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerShoot
   projectilePrefab: {fileID: 7584261611175462559, guid: 966c9dd3d288d0d41b4671128eb6523d, type: 3}
   firePoint: {fileID: 7996398355417335973}
-  enemy: {fileID: 0}
-  range: 12
   fireRate: 0.5
   projectileSpeed: 30
 --- !u!1 &5694626840081957847

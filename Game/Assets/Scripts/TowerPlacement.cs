@@ -62,17 +62,52 @@ public class TowerPlacement : MonoBehaviour
         }
     }
 
+    
     void OnGUI()
     {
-        GUI.Box(new Rect(10, 10, 280, 90), "Tower Defense");
+        if (GameManager.IsGameOver)
+            return;
 
-        GUI.Label(new Rect(20, 35, 260, 20),
-            "1 = Basic Tower | 2 = Tall Tower");
+        // Instruction panel
+        GUI.Box(new Rect(15, 15, 460, 170), "");
 
-        GUI.Label(new Rect(20, 55, 260, 20),
-            "Click on grass to place a tower");
+        GUIStyle titleStyle = new GUIStyle(GUI.skin.label);
+        titleStyle.fontSize = 26;
+        titleStyle.fontStyle = FontStyle.Bold;
+        titleStyle.normal.textColor = Color.white;
 
-        GUI.Label(new Rect(20, 75, 260, 20),
-            "Towers Remaining: " + towersRemaining);
+        GUIStyle textStyle = new GUIStyle(GUI.skin.label);
+        textStyle.fontSize = 20;
+        textStyle.normal.textColor = Color.white;
+
+        GUI.Label(
+            new Rect(30, 25, 420, 35),
+            "TOWER DEFENSE",
+            titleStyle
+        );
+
+        GUI.Label(
+            new Rect(30, 65, 420, 30),
+            "1 = Basic Tower    |    2 = Tall Tower",
+            textStyle
+        );
+
+        GUI.Label(
+            new Rect(30, 95, 420, 30),
+            "Left-click grass to place towers",
+            textStyle
+        );
+
+        string selected = selectedTower == 1
+            ? "Basic Tower"
+            : "Tall Tower";
+
+        GUI.Label(
+            new Rect(30, 130, 430, 30),
+            "Selected: " + selected +
+            "    |    Towers Left: " + towersRemaining,
+            textStyle
+        );
     }
+
 }
