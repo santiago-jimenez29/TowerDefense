@@ -8,6 +8,7 @@ public class TowerShoot : MonoBehaviour
 
     public float fireRate = 1f;
     public float projectileSpeed = 20f;
+    public int damage = 1;
 
     private float nextFireTime = 0f;
     private TowerAim towerAim;
@@ -62,13 +63,17 @@ public class TowerShoot : MonoBehaviour
         Projectile projectile =
             bullet.GetComponent<Projectile>();
 
+        
         if (projectile != null)
         {
+            projectile.damage = damage;
+
             projectile.Launch(
                 direction,
                 projectileSpeed
             );
         }
+
     }
 
 }
