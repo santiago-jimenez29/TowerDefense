@@ -63,38 +63,41 @@ public class TowerPlacement : MonoBehaviour
     }
 
     
+    
     void OnGUI()
     {
         if (GameManager.IsGameOver)
             return;
 
-        // Instruction panel
-        GUI.Box(new Rect(15, 15, 460, 170), "");
+        // Larger instruction panel
+        float width = Mathf.Min(560f, Screen.width - 30f);
+
+        GUI.Box(new Rect(15, 15, width, 215), "");
 
         GUIStyle titleStyle = new GUIStyle(GUI.skin.label);
-        titleStyle.fontSize = 26;
+        titleStyle.fontSize = 32;
         titleStyle.fontStyle = FontStyle.Bold;
         titleStyle.normal.textColor = Color.white;
 
         GUIStyle textStyle = new GUIStyle(GUI.skin.label);
-        textStyle.fontSize = 20;
+        textStyle.fontSize = 23;
         textStyle.normal.textColor = Color.white;
 
         GUI.Label(
-            new Rect(30, 25, 420, 35),
+            new Rect(35, 25, width - 40, 45),
             "TOWER DEFENSE",
             titleStyle
         );
 
         GUI.Label(
-            new Rect(30, 65, 420, 30),
-            "1 = Basic Tower    |    2 = Tall Tower",
+            new Rect(35, 75, width - 40, 35),
+            "1 = Basic Tower | 2 = Tall Tower",
             textStyle
         );
 
         GUI.Label(
-            new Rect(30, 95, 420, 30),
-            "Left-click grass to place towers",
+            new Rect(35, 115, width - 40, 35),
+            "Click grass to place towers",
             textStyle
         );
 
@@ -103,11 +106,17 @@ public class TowerPlacement : MonoBehaviour
             : "Tall Tower";
 
         GUI.Label(
-            new Rect(30, 130, 430, 30),
-            "Selected: " + selected +
-            "    |    Towers Left: " + towersRemaining,
+            new Rect(35, 165, width - 40, 35),
+            "Selected: " + selected,
+            textStyle
+        );
+
+        GUI.Label(
+            new Rect(35, 195, width - 40, 30),
+            "Towers Left: " + towersRemaining,
             textStyle
         );
     }
+
 
 }

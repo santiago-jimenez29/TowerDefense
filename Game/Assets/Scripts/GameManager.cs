@@ -7,24 +7,24 @@ public class GameManager : MonoBehaviour
     public static bool IsGameOver { get; private set; }
     public static bool IsVictory { get; private set; }
     private int enemiesRemaining;
+    public int EnemiesRemaining => enemiesRemaining;
 
     void Awake()
     {
+        enemiesRemaining = 0;
         IsGameOver = false;
         IsVictory = false;
         Time.timeScale = 1f;
     }
 
-    void Start()
+    
+    public void RegisterEnemy()
     {
-        // Count all enemies when the game begins
-        enemiesRemaining =
-            FindObjectsByType<EnemyHealth>(
-                FindObjectsSortMode.None
-            ).Length;
+        enemiesRemaining++;
 
         Debug.Log("Enemies remaining: " + enemiesRemaining);
     }
+
 
 
     // Called when an enemy reaches the end
@@ -45,15 +45,9 @@ public class GameManager : MonoBehaviour
         if (IsGameOver)
             return;
 
-        enemiesRemaining--;
+        enemiesRemaining = Mathf.Max(0, enemiesRemaining - 1);
 
         Debug.Log("Enemies remaining: " + enemiesRemaining);
-
-        // Win only when every enemy has been defeated
-        if (enemiesRemaining <= 0)
-        {
-            WinGame();
-        }
     }
 
     // Called when the enemy is destroyed
@@ -79,24 +73,23 @@ public class GameManager : MonoBehaviour
         );
     }
 
-    
     void OnGUI()
     {
         if (!IsGameOver)
             return;
 
-        float width = 440f;
-        float height = 250f;
+        // Larger centered panel
+        float width = Mathf.Min(600f, Screen.width - 20f);
+        float height = Mathf.Min(320f, Screen.height - 20f);
 
         float x = (Screen.width - width) / 2f;
         float y = (Screen.height - height) / 2f;
 
-        // Background panel
         GUI.Box(new Rect(x, y, width, height), "");
 
-        // Large title
+        // Victory or Game Over title
         GUIStyle titleStyle = new GUIStyle(GUI.skin.label);
-        titleStyle.fontSize = 34;
+        titleStyle.fontSize = 44;
         titleStyle.fontStyle = FontStyle.Bold;
         titleStyle.alignment = TextAnchor.MiddleCenter;
 
@@ -107,14 +100,14 @@ public class GameManager : MonoBehaviour
         string title = IsVictory ? "YOU WIN!" : "GAME OVER";
 
         GUI.Label(
-            new Rect(x + 20, y + 30, 400, 60),
+            new Rect(x + 20, y + 35, width - 40, 75),
             title,
             titleStyle
         );
 
         // Description
         GUIStyle messageStyle = new GUIStyle(GUI.skin.label);
-        messageStyle.fontSize = 20;
+        messageStyle.fontSize = 26;
         messageStyle.alignment = TextAnchor.MiddleCenter;
         messageStyle.normal.textColor = Color.white;
 
@@ -123,17 +116,20 @@ public class GameManager : MonoBehaviour
             : "An enemy escaped!";
 
         GUI.Label(
-            new Rect(x + 20, y + 100, 400, 40),
+            new Rect(x + 20, y + 120, width - 40, 55),
             message,
             messageStyle
         );
 
         // Larger restart button
         GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
-        buttonStyle.fontSize = 20;
+        buttonStyle.fontSize = 26;
+
+        float buttonWidth = Mathf.Min(280f, width - 40f);
+        float buttonX = x + (width - buttonWidth) / 2f;
 
         if (GUI.Button(
-            new Rect(x + 105, y + 165, 230, 55),
+            new Rect(buttonX, y + height - 95, buttonWidth, 65),
             "Restart Game",
             buttonStyle
         ))
@@ -141,7 +137,6 @@ public class GameManager : MonoBehaviour
             RestartGame();
         }
     }
-
 
     void OnDisable()
     {

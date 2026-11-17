@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerShoot
   projectilePrefab: {fileID: 7584261611175462559, guid: 966c9dd3d288d0d41b4671128eb6523d, type: 3}
   firePoint: {fileID: 7996398355417335973}
-  fireRate: 0.5
+  fireRate: 0.75
   projectileSpeed: 30
 --- !u!1 &5694626840081957847
 GameObject:
